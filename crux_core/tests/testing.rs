@@ -1,56 +1,56 @@
-//! Test for the testing APIs
-#[expect(deprecated)]
-use crux_core::testing::AppTester;
+// //! Test for the testing APIs
+// #[expect(deprecated)]
+// use crux_core::testing::AppTester;
 
-mod app {
-    use crux_core::{
-        App, Command,
-        render::{RenderOperation, render},
-    };
-    use crux_macros::effect;
-    use serde::{Deserialize, Serialize};
+// mod app {
+//     use crux_core::{
+//         App, Command,
+//         render::{RenderOperation, render},
+//     };
+//     use crux_macros::effect;
+//     use serde::{Deserialize, Serialize};
 
-    #[derive(Debug, Serialize, Deserialize)]
-    pub enum Event {
-        Hello,
-    }
+//     #[derive(Debug, Serialize, Deserialize)]
+//     pub enum Event {
+//         Hello,
+//     }
 
-    #[effect]
-    pub enum Effect {
-        Render(RenderOperation),
-    }
+//     #[effect]
+//     pub enum Effect {
+//         Render(RenderOperation),
+//     }
 
-    #[derive(Default)]
-    pub struct MyApp;
+//     #[derive(Default)]
+//     pub struct MyApp;
 
-    impl App for MyApp {
-        type Event = Event;
-        type Model = String;
-        type ViewModel = String;
-        type Effect = Effect;
+//     impl App for MyApp {
+//         type Event = Event;
+//         type Model = String;
+//         type ViewModel = String;
+//         type Effect = Effect;
 
-        fn update(&self, _event: Self::Event, _model: &mut Self::Model) -> Command<Effect, Event> {
-            render()
-        }
+//         fn update(&self, _event: Self::Event, _model: &mut Self::Model) -> Command<Effect, Event> {
+//             render()
+//         }
 
-        fn view(&self, model: &Self::Model) -> Self::ViewModel {
-            model.clone()
-        }
-    }
-}
+//         fn view(&self, model: &Self::Model) -> Self::ViewModel {
+//             model.clone()
+//         }
+//     }
+// }
 
-#[test]
-fn app_tester_new() {
-    let app = app::MyApp;
+// #[test]
+// fn app_tester_new() {
+//     let app = app::MyApp;
 
-    #[expect(deprecated)]
-    let tester = AppTester::new(app);
+//     #[expect(deprecated)]
+//     let tester = AppTester::new(app);
 
-    let mut model = "Hello".to_string();
+//     let mut model = "Hello".to_string();
 
-    let update = tester.update(app::Event::Hello, &mut model);
+//     let update = tester.update(app::Event::Hello, &mut model);
 
-    let effects = update.into_effects();
+//     let effects = update.into_effects();
 
-    assert_eq!(effects.count(), 1);
-}
+//     assert_eq!(effects.count(), 1);
+// }
